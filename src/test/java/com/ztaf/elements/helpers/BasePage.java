@@ -2,7 +2,7 @@ package com.ztaf.elements.helpers;
 
 import org.openqa.selenium.WebDriver;
 
-import com.ztaf.elements.factory.api.ElementFactory;
+import com.fortaf.elements.factory.api.ElementFactory;
 
 public class BasePage {
 

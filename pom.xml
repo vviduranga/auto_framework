@@ -2,12 +2,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.ztaf</groupId>
-	<artifactId>ztaf</artifactId>
+	<groupId>com.fortaf</groupId>
+	<artifactId>fortaf</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>ztaf</name>
+	<name>fortaf</name>
 	<licenses>
 		<license>
 			<name>Apache 2.0 License</name>
@@ -20,8 +20,8 @@
 				<role>member</role>
 			</roles>
 			<name>Rasitha E</name>
-			<email>rasitha@ztaf.com</email>
-			<url>http://ztaf.com/</url>
+			<email>rasithae@fortude.co</email>
+			<url>http://fortude.com/</url>
 		</developer>
 	</developers>
 
@@ -31,12 +31,8 @@
 	</properties>
 
 	<dependencies>
-	<!-- <dependency> 
-			<groupId>junit</groupId> 
-			<artifactId>junit</artifactId> 
-			<version>4.11</version> 
-			<scope>test</scope> 
-		</dependency> -->
+		<!-- <dependency> <groupId>junit</groupId> <artifactId>junit</artifactId> 
+			<version>4.11</version> <scope>test</scope> </dependency> -->
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
@@ -48,6 +44,12 @@
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
 			<version>3.1.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>3.1.5</version>
 		</dependency>
 
 		<dependency>
@@ -88,5 +90,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	<description>ztaf automation framework</description>
+	<description>fortaf automation framework</description>
 </project>

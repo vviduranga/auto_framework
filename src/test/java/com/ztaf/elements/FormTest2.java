@@ -13,10 +13,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import com.ztaf.driver.DriverManager;
-import com.ztaf.elements.base.Element;
+import com.fortaf.drivers.DriverManager;
+import com.fortaf.elements.base.Element;
+import com.fortaf.elements.basic.Label;
 import com.ztaf.elements.helpers.FormTestObject;
-import com.ztaf.elements.widget.Label;
 
 /**
  * Test the form element types.

@@ -1,27 +1,35 @@
 package com.ztaf.elements;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.InvalidElementStateException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
-import com.ztaf.driver.DriverManager;
-import com.ztaf.elements.base.Element;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.fortaf.annotations.TestConfig;
+import com.fortaf.annotations.TestConfig.Browser;
+import com.fortaf.drivers.DriverManager;
+import com.fortaf.annotations.TestNGAnnotationHandler;
+import com.fortaf.elements.base.Element;
+import com.fortaf.elements.basic.Label;
 import com.ztaf.elements.helpers.FormTestObject;
-import com.ztaf.elements.widget.Label;
-
 /**
  * Test the form element types.
  */
 
+@TestConfig(browser=Browser.chrome)
 public class FormTest {
     static WebDriver driver;
     static FormTestObject testObject;
@@ -39,6 +47,44 @@ public class FormTest {
         testObject.get();
     }
     
+    @Test
+	public void loginTest() throws IOException
+	{    
+            // Create Object of ExtentHtmlReporter and provide the path where you want to generate the report 
+            // I used (.) in path where represent the current working directory
+	    ExtentHtmlReporter reporter=new ExtentHtmlReporter("./reports/learn_automation1.html");
+		
+            // Create object of ExtentReports class- This is main class which will create report
+	    ExtentReports extent = new ExtentReports();
+	    
+            // attach the reporter which we created in Step 1
+	    extent.attachReporter(reporter);
+	    
+            // call createTest method and pass the name of TestCase- Based on your requirement
+	    ExtentTest logger=extent.createTest("LoginTest");
+	    
+            // log method will add logs in report and provide the log steps which will come in report
+	    logger.log(Status.INFO, "Login to amazon");
+	   
+	    logger.log(Status.PASS, "Title verified");
+	   
+            // Flush method will write the test in report- This is mandatory step  
+	    extent.flush();
+		
+            // You can call createTest method multiple times depends on your requirement
+            // In our case we are calling twice which will add 2 testcases in our report
+	    ExtentTest logger2=extent.createTest("Logoff Test");
+	    
+	    logger2.log(Status.FAIL, "Title verified");
+	    
+	    logger2.fail("Failed because of some issues", MediaEntityBuilder.createScreenCaptureFromPath("/Users/mukeshotwani/Desktop/logo.jpg").build());
+        
+	    logger2.pass("Failed because of some issues", MediaEntityBuilder.createScreenCaptureFromPath("/Users/mukeshotwani/Desktop/logo.jpg").build());
+ 
+            // This will add another test in report
+	    extent.flush();
+	    	
+	}
 /*    @BeforeTest
     public void beforeTest() {
     	testObject.get();
@@ -72,7 +118,7 @@ public class FormTest {
     @Test
     public void getLabelsList() {
         for (Label label : testObject.labels) {
-            Assert.assertNotNull(label.getFor());
+            Assert.assertNotNull(label.getValue());
         }
     }
 

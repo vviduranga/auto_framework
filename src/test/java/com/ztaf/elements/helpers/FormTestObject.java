@@ -2,16 +2,17 @@ package com.ztaf.elements.helpers;
 
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import com.ztaf.elements.base.Element;
-import com.ztaf.elements.widget.CheckBox;
-import com.ztaf.elements.widget.Label;
-import com.ztaf.elements.widget.Select;
-import com.ztaf.elements.widget.Table;
-import com.ztaf.elements.widget.TextInput;
+
+import com.fortaf.elements.base.Element;
+import com.fortaf.elements.basic.CheckBox;
+import com.fortaf.elements.basic.Label;
+import com.fortaf.elements.basic.Select;
+import com.fortaf.elements.basic.Table;
+import com.fortaf.elements.basic.TextInput;
+import com.fortaf.elements.custom.SelectFragment;
 
 /**
  * declare elements of a form.
