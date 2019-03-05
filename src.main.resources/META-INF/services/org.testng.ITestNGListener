@@ -1,1 +1,1 @@
-com.fortaf.annotations.TestNGAnnotationHandler
+com.fortaf.testng.FORTAFTestListener

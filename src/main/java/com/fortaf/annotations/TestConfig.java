@@ -28,5 +28,5 @@ public @interface TestConfig {
 
 	String lastModified() default "";
 	
-
+	String baseUrl() default "";
 }

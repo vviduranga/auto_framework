@@ -1,21 +1,15 @@
 package com.ztaf.elements;
 
+import static com.fortaf.framework.core.WaitHandler.sleep;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.InvalidElementStateException;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.fortaf.drivers.DriverManager;
-import com.fortaf.elements.base.Element;
-import com.fortaf.elements.basic.Label;
 import com.ztaf.elements.helpers.FormTestObject;
 
 /**
@@ -40,6 +34,11 @@ public class FormTest2 {
         Assert.assertNotNull(testObject.selectFragment.getSubElement(By.id("option1")));
     }
 
+    @Test
+    public void testWait() {
+    	sleep(10);
+    }
+    
     @AfterClass
     public static void afterClass() {
         driver.close();
