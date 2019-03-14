@@ -30,7 +30,7 @@ public class BasicExtentReport {
 	public ExtentTest logger;
 
 	
-//	@BeforeTest
+	@BeforeTest
 	public void startReport() {
 		htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "/reports/STMExtentReport.html");// Create an object of Extent Reports
 		extent = new ExtentReports();  
@@ -55,7 +55,7 @@ public class BasicExtentReport {
 		return destination;
 	}
 	
-//	@AfterMethod
+	@AfterMethod
 	public void getResult(ITestResult result, WebDriver driver) throws Exception{
 		if(result.getStatus() == ITestResult.FAILURE){
 			//MarkupHelper is used to display the output in different colors
