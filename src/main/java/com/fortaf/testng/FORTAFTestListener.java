@@ -10,6 +10,7 @@ import org.testng.ITestResult;
 
 import com.fortaf.annotations.TestConfig;
 import com.fortaf.drivers.DriverManager;
+import com.fortaf.reports.BasicExtentReport;
 
 public class FORTAFTestListener implements ITestListener, IInvokedMethodListener {
 
@@ -50,16 +51,17 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 
 	@Override
 	public void onFinish(ITestContext context) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub		
 
 	}
 
 	@Override
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
 		// TODO Auto-generated method stub
+		BasicExtentReport.logTestCase(method.getTestMethod().getMethodName());
 
 		// If annotation is present
-		if (testResult.getInstance().getClass().isAnnotationPresent(TestConfig.class)) {
+		if (TestConfig.class!=null || testResult.getInstance().getClass().isAnnotationPresent(TestConfig.class)) {
 
 			if (method.isTestMethod()) {
 				System.out.println("Start Executing Test: " + method.getTestMethod().getMethodName());
@@ -71,11 +73,13 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 				driver().navigate().to(config.baseUrl());
 			}
 		}
-		// super.onTestStart(result);
 	}
 
 	@Override
 	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
+		
+		BasicExtentReport.getResult(testResult, driver());
+		
 		// TODO Auto-generated method stub
 		if (method.isTestMethod() && !driver().equals(null)) {
 			System.out.println("Finished Executing Test: " + method.getTestMethod().getMethodName());

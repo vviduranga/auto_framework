@@ -1,4 +1,4 @@
-package com.ztaf.elements;
+package com.ztaf.test.features;
 
 import static com.fortaf.framework.core.WaitHandler.sleep;
 
@@ -16,19 +16,21 @@ import com.ztaf.elements.helpers.FormTestObject;
  * Test the form element types.
  */
 
-public class FormTest2 {
+public class SelectFragmentTest {
     static WebDriver driver;
     static FormTestObject testObject;
 
     @BeforeClass
     public static void beforeClass() {
         driver = new DriverManager().getBrowser("chrome");
-        testObject = FormTestObject.initialize(driver);
-        testObject.get();
+
     }
 
     @Test
     public void selectWiredProperly() {
+        testObject = new FormTestObject();
+        testObject.get();
+        
         testObject.selectFragment.getOption1().selectByIndex(0);
         Assert.assertEquals(1, testObject.selectFragment.getOption1().getAllSelectedOptions().size());
         Assert.assertNotNull(testObject.selectFragment.getSubElement(By.id("option1")));

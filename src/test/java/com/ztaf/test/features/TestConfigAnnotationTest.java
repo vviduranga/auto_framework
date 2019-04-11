@@ -1,4 +1,4 @@
-package com.ztaf.elements;
+package com.ztaf.test.features;
 
 import static com.fortaf.drivers.DriverManager.driver;
 
@@ -13,15 +13,15 @@ import com.ztaf.elements.helpers.FormTestObject;
  * Test the form element types.
  */
 @TestConfig(browser=Browser.chrome, baseUrl = "http://www.google.com")
-public class FormTest {
+public class TestConfigAnnotationTest {
 
 	static FormTestObject testObject;
 
 	@Test
-    public void isChecked() throws InterruptedException {
+    public void googleSearch() throws InterruptedException {
         driver().findElement(By.name("q")).sendKeys("abc");
-        Thread.sleep(100);
-
+        Thread.sleep(1000);
+        
     }
 
 }

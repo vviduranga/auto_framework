@@ -2,16 +2,20 @@ package com.fortaf.testng;
 
 import org.testng.IExecutionListener;
 
-public class FORTAFExecutionListener implements IExecutionListener{
+import com.fortaf.reports.BasicExtentReport;
 
-		@Override
-	    public void onExecutionStart() {
-	       System.out.println("This method will be called right before starting the execution");
-	    }
-		
+public class FORTAFExecutionListener implements IExecutionListener {
 
-	    public void onExecutionFinish() {
-	        System.out.println("This method will be called right after execution is finished");
-	    }
+	@Override
+	public void onExecutionStart() {
+		System.out.println("This method will be called right before starting the execution");
+		System.out.println("Starting Extent Report");
+		BasicExtentReport.startReport();
 	}
 
+	@Override
+	public void onExecutionFinish() {
+		System.out.println("This method will be called right after execution is finished");
+		BasicExtentReport.endReport();
+	}
+}

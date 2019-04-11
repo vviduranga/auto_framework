@@ -1,4 +1,4 @@
-package com.ztaf.elements;
+package com.ztaf.test.features;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,13 +6,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
@@ -21,6 +25,7 @@ import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.fortaf.drivers.DriverManager;
 	
 public class ExtentReportsTest {
 	public WebDriver driver;
@@ -30,7 +35,9 @@ public class ExtentReportsTest {
 
 	@BeforeTest
 	public void startReport() {
-		htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "/reports/STMExtentReport.html");// Create an object of Extent Reports
+		htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "/reports/AAA.html");// Create an object of Extent Reports
+		//htmlReporter = new ExtentHtmlReporter("D://reports//STMExtentReport.html");// Create an object of Extent Reports
+
 		extent = new ExtentReports();  
 		extent.attachReporter(htmlReporter);
 		extent.setSystemInfo("Host Name", "localhost");
@@ -52,20 +59,20 @@ public class ExtentReportsTest {
 		FileUtils.copyFile(source, finalDestination);
 		return destination;
 	}
-//
-//	@BeforeMethod
-//	public void setup() {
-//		driver = new DriverManager().getBrowser("chrome");
-//		driver.manage().window().maximize();
-//		driver.get("https://www.google.com/");
-//	}
+
+	@BeforeMethod
+	public void setup() {
+		driver = new DriverManager().getBrowser("chrome");
+		driver.manage().window().maximize();
+		driver.get("https://www.google.com/");
+	}
 	
-//	@Test
-//	public void verifyTitle() {
-//		logger = extent.createTest("To verify Google Title");
-//		Assert.assertEquals(driver.getTitle(),"Google");
-//	}
-//	
+	@Test
+	public void verifyTitle() {
+		logger = extent.createTest("To verify Google Title");
+		Assert.assertEquals(driver.getTitle(),"Google");
+	}
+	
 //	@Test
 //	public void verifyLogo() {
 //		logger = extent.createTest("To verify Google Logo");

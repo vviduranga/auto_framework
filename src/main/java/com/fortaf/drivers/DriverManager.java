@@ -48,7 +48,7 @@ public class DriverManager {
 	public WebDriver getBrowser(String browser){
 	
 		if(browser.equalsIgnoreCase("chrome")){
-			WebDriverManager.chromedriver().setup() ;
+			WebDriverManager.chromedriver().setup();
 			setDriver(new ChromeDriver());
 		}
 		else if(browser.equalsIgnoreCase("firefox")){

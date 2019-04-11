@@ -13,6 +13,9 @@ import com.fortaf.elements.basic.Select;
 import com.fortaf.elements.basic.Table;
 import com.fortaf.elements.basic.TextInput;
 import com.fortaf.elements.custom.SelectFragment;
+import com.fortaf.framework.core.BasePage;
+
+import static com.fortaf.drivers.DriverManager.driver;
 
 /**
  * declare elements of a form.
@@ -52,9 +55,14 @@ public class FormTestObject extends BasePage{
     @FindBy(css = "label[for='textb']")
     public WebElement labelForTextB;
 
-    public FormTestObject(WebDriver driver) {
-        this.driver = driver;
+    public FormTestObject() {
+        super();
+        this.driver = driver();
     }
+    
+//    public FormTestObject(WebDriver driver) {
+//        this.driver = driver;
+//    }
 
 //    /**
 //     * Static factory for generating the class.
