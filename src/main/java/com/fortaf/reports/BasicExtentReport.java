@@ -19,6 +19,7 @@ import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.fortaf.framework.util.DateUtil;
 
 public class BasicExtentReport {
 
@@ -39,6 +40,7 @@ public class BasicExtentReport {
 		String reportPath = reportFolderPath + reportName + ".html";
 		System.out.println("Report Path : " + reportPath);
 
+		/* Create folder if not exist */
 		File file = new File(reportPath);
         try {
         	file.getParentFile().mkdirs();
@@ -53,8 +55,8 @@ public class BasicExtentReport {
 		extent = new ExtentReports();  
 		extent.attachReporter(htmlReporter);
 		extent.setSystemInfo("Host Name", "localhost");
-        extent.setSystemInfo("Environment", "Production");
-		extent.setSystemInfo("User Name", "FortudeLtd");
+        extent.setSystemInfo("Environment", "Test");
+		extent.setSystemInfo("User Name", "Fortude (Pvt) Ltd");
 		htmlReporter.config().setDocumentTitle("Fortude Test Automation Report"); // Name of the report
 		htmlReporter.config().setReportName("Fortude Test Automation Report"); // Dark Theme
 		htmlReporter.config().setTheme(Theme.DARK);		
@@ -77,7 +79,7 @@ public class BasicExtentReport {
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		File source = ts.getScreenshotAs(OutputType.FILE);
 		// after execution, you could see a folder "FailedTestsScreenshots" under src folder
-		String destination = System.getProperty("user.dir") + "/Screenshots/" + screenshotName + dateName + ".png";
+		String destination = System.getProperty("user.dir") + "/screenshots/" + screenshotName + dateName + ".png";
 		File finalDestination = new File(destination);
 		FileUtils.copyFile(source, finalDestination);
 		return destination;
@@ -125,7 +127,7 @@ public class BasicExtentReport {
 	}
 	
 	private static String getTestReportId(){
-		return "FORTAF Test Report - "  + UUID.randomUUID().toString();
+		return "FORTAF Test Report - "  + DateUtil.currentDate("dd_MM_yyyy HH_mm_ss").toString();
 	}
 	
 }

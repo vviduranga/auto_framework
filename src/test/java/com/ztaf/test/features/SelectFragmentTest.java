@@ -1,6 +1,6 @@
 package com.ztaf.test.features;
 
-import static com.fortaf.framework.core.WaitHandler.sleep;
+import static com.fortaf.framework.core.WaitHandler.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

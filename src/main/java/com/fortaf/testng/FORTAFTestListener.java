@@ -11,6 +11,8 @@ import org.testng.ITestResult;
 import com.fortaf.annotations.TestConfig;
 import com.fortaf.drivers.DriverManager;
 import com.fortaf.reports.BasicExtentReport;
+import static com.fortaf.test.config.ContextParam.*;
+import com.fortaf.test.config.TestContext;
 
 public class FORTAFTestListener implements ITestListener, IInvokedMethodListener {
 
@@ -57,7 +59,7 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 
 	@Override
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-		// TODO Auto-generated method stub
+
 		BasicExtentReport.logTestCase(method.getTestMethod().getMethodName());
 
 		// If annotation is present
@@ -66,7 +68,7 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 			if (method.isTestMethod()) {
 				System.out.println("Start Executing Test: " + method.getTestMethod().getMethodName());
 				TestConfig config = testResult.getInstance().getClass().getAnnotation(TestConfig.class);
-				// Start the browser
+				/** Start the browser **/
 				DriverManager manager = new DriverManager();
 				manager.getBrowser(config.browser().toString());
 				System.out.println(config.baseUrl());
@@ -80,13 +82,21 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 		
 		BasicExtentReport.getResult(testResult, driver());
 		
-		// TODO Auto-generated method stub
 		if (method.isTestMethod() && !driver().equals(null)) {
 			System.out.println("Finished Executing Test: " + method.getTestMethod().getMethodName());
 			driver().close();
 		}
 	}
 
+	
+	public void setTestConfigParamsToContext(ITestResult testResult) {
+		TestConfig config = testResult.getInstance().getClass().getAnnotation(TestConfig.class);
+
+		TestContext.setIfNotExist(BROWSER, config.browser().toString());
+		TestContext.setIfNotExist(BASE_URL, config.baseUrl().toString());
+		//TODO: Add any other default parameters
+	}
+	
 	/**
 	 * References: 1.
 	 * https://www.toolsqa.com/selenium-webdriver/testng-listeners/
