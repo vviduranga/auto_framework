@@ -81,6 +81,7 @@ public class DriverManager {
 	 * References:
 	 * 1. https://www.swtestacademy.com/selenium-parallel-tests-grid-testng/
 	 * 2. https://rationaleemotions.wordpress.com/2013/07/31/parallel-webdriver-executions-using-testng/
+	 * 3/ https://stackoverflow.com/questions/49819021/parallel-execution-of-selenium-script-on-one-physical-machine
 	 */
 	
 }

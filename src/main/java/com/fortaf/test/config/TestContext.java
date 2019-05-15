@@ -2,6 +2,8 @@ package com.fortaf.test.config;
 
 import java.util.Map;
 
+import com.google.common.collect.Maps;
+
 public class TestContext {
 
 
@@ -9,6 +11,20 @@ public class TestContext {
 
 	protected static final ThreadLocal<Map<String, Object>> automationCache = new ThreadLocal<>();
 
+	/**
+	 * Initiate the Test Context
+	 */
+	public static final void initiate(){
+		Map<String, Object> map = Maps.newHashMap();
+		automationCache.set(map);
+	}
+	
+	/**
+	 * Clear the Test Context
+	 */
+	public static final void clear(){
+		automationCache.remove();
+	}
 	
 	/**
 	 * Get value from Test Context
@@ -59,7 +75,7 @@ public class TestContext {
 	 */
 	public static final boolean isNull(){
 		boolean status = false;
-		if(automationCache.get() != null){
+		if(automationCache.get() == null){
 			status = true;
 		}
 		return status;

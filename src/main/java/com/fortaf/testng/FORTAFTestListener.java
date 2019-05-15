@@ -1,6 +1,8 @@
 package com.fortaf.testng;
 
 import static com.fortaf.drivers.DriverManager.driver;
+import static com.fortaf.test.config.ContextParam.BASE_URL;
+import static com.fortaf.test.config.ContextParam.BROWSER;
 
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
@@ -11,7 +13,6 @@ import org.testng.ITestResult;
 import com.fortaf.annotations.TestConfig;
 import com.fortaf.drivers.DriverManager;
 import com.fortaf.reports.BasicExtentReport;
-import static com.fortaf.test.config.ContextParam.*;
 import com.fortaf.test.config.TestContext;
 
 public class FORTAFTestListener implements ITestListener, IInvokedMethodListener {
@@ -57,26 +58,47 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 
 	}
 
+//	@Override
+//	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
+//
+//		BasicExtentReport.logTestCase(method.getTestMethod().getMethodName());
+//
+//		// If annotation is present
+//		if (TestConfig.class!=null || testResult.getInstance().getClass().isAnnotationPresent(TestConfig.class)) {
+//
+//			if (method.isTestMethod()) {
+//				System.out.println("Start Executing Test: " + method.getTestMethod().getMethodName());
+//				TestConfig config = testResult.getInstance().getClass().getAnnotation(TestConfig.class);
+//				/** Start the browser **/
+//				DriverManager manager = new DriverManager();
+//				manager.getBrowser(config.browser().toString());
+//				System.out.println(config.baseUrl());
+//				driver().navigate().to(config.baseUrl());
+//			}
+//		}
+//	}
+
 	@Override
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
 
 		BasicExtentReport.logTestCase(method.getTestMethod().getMethodName());
 
 		// If annotation is present
-		if (TestConfig.class!=null || testResult.getInstance().getClass().isAnnotationPresent(TestConfig.class)) {
+		if (testResult.getInstance().getClass().isAnnotationPresent(TestConfig.class)) {
 
 			if (method.isTestMethod()) {
 				System.out.println("Start Executing Test: " + method.getTestMethod().getMethodName());
-				TestConfig config = testResult.getInstance().getClass().getAnnotation(TestConfig.class);
+				setTestConfigParamsToContext(testResult);
+				
 				/** Start the browser **/
 				DriverManager manager = new DriverManager();
-				manager.getBrowser(config.browser().toString());
-				System.out.println(config.baseUrl());
-				driver().navigate().to(config.baseUrl());
+				manager.getBrowser(TestContext.get(BROWSER).toString());
+				System.out.println(TestContext.get(BASE_URL).toString());
+				driver().navigate().to(TestContext.get(BASE_URL).toString());
 			}
 		}
 	}
-
+	
 	@Override
 	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
 		
@@ -88,14 +110,28 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 		}
 	}
 
-	
+	/**
+	 * Set test config parameters to context
+	 * @param testResult
+	 */
 	public void setTestConfigParamsToContext(ITestResult testResult) {
-		TestConfig config = testResult.getInstance().getClass().getAnnotation(TestConfig.class);
+		TestConfig configAnnotation = testResult.getInstance().getClass().getAnnotation(TestConfig.class);
 
-		TestContext.setIfNotExist(BROWSER, config.browser().toString());
-		TestContext.setIfNotExist(BASE_URL, config.baseUrl().toString());
-		//TODO: Add any other default parameters
+		if (isTestConfigAnnoationPresent(testResult)) {
+			TestContext.setIfNotExist(BROWSER, configAnnotation.browser().toString());
+			TestContext.setIfNotExist(BASE_URL, configAnnotation.baseUrl().toString());
+			// TODO: Add any other default parameters
+		}
 	}
+	
+	public boolean isTestConfigAnnoationPresent(ITestResult testResult){
+		if (testResult.getInstance().getClass().isAnnotationPresent(TestConfig.class))
+			return true;
+		else
+			return false;
+	}
+	
+	
 	
 	/**
 	 * References: 1.

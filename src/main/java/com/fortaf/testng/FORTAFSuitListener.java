@@ -1,5 +1,7 @@
 package com.fortaf.testng;
 
+import java.util.Map;
+
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
 
@@ -22,6 +24,13 @@ public class FORTAFSuitListener implements ISuiteListener {
 		// TODO Auto-generated method stub
 	}
 
+	public void setTestPlanParametersToContext(ISuite suite){
+		Map<String, String> params = suite.getXmlSuite().getAllParameters();
+		
+		// Add all test plan params to test context
+		
+		
+	}
 	
 	/**
 	 * References: 1.

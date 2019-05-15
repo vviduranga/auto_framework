@@ -8,8 +8,8 @@ import java.util.Properties;
 
 public class PropertyFileData {
 
-	private String DataFolder;
-	private String DataFile;
+	private String dataFolder;
+	private String dataFile;
 	
 	public PropertyFileData(String dataFolder, String dataFile) {
 		setDataFolder(dataFolder);
@@ -17,19 +17,19 @@ public class PropertyFileData {
 	}
 	
 	public String getDataFolder() {
-		return DataFolder;
+		return dataFolder;
 	}
 
 	public void setDataFolder(String dataFolder) {
-		DataFolder = dataFolder;
+		this.dataFolder = dataFolder;
 	}
 
 	public String getDataFile() {
-		return DataFile;
+		return dataFile;
 	}
 
 	public void setDataFile(String dataFile) {
-		DataFile = dataFile;
+		this.dataFile = dataFile;
 	}
 
 	/**
