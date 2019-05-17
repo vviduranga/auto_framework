@@ -1,6 +1,6 @@
 package com.fortaf.framework.core;
 
-import static com.fortaf.drivers.DriverManager.driver;
+import static com.fortaf.framework.drivers.DriverManager.driver;
 
 import java.util.List;
 

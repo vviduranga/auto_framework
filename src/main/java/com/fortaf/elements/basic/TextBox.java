@@ -6,8 +6,8 @@ import com.fortaf.elements.base.ImplementedBy;
 /**
  * Text field functionality.
  */
-@ImplementedBy(TextInputImpl.class)
-public interface TextInput extends Element {
+@ImplementedBy(TextBoxImpl.class)
+public interface TextBox extends Element {
     /**
      * @param text The text to type into the field.
      */

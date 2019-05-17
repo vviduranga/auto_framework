@@ -11,4 +11,7 @@ public class ContextParam {
 	public static final String IMPLICIT_WAIT = "fortaf.test.config.implicitwait";
 	
 	
+	public static final String ENDPOINT_URL = "fortaf.test.endpointurl";
+	public static final String PRIORITY = "fortaf.test.priority";
+
 }

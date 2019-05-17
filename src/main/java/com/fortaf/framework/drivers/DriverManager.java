@@ -1,4 +1,4 @@
-package com.fortaf.drivers;
+package com.fortaf.framework.drivers;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;

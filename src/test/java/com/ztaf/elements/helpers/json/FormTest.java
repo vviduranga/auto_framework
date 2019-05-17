@@ -5,15 +5,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.testng.annotations.Test;
-import com.fortaf.annotations.TestConfig.Browser;
-import com.fortaf.annotations.TestConfig;
+
 import com.google.gson.Gson;
 import com.ztaf.elements.helpers.FormTestObject;
 
 /**
  * Test the form element types.
  */
-@TestConfig(browser=Browser.chrome, baseUrl = "http://www.google.com")
+
 public class FormTest {
 
 	static FormTestObject testObject;

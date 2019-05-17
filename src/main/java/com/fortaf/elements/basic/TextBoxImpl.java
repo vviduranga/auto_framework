@@ -7,13 +7,13 @@ import com.fortaf.elements.base.ElementImpl;
 /**
  * TextInput  wrapper.
  */
-public class TextInputImpl extends ElementImpl implements TextInput {
+public class TextBoxImpl extends ElementImpl implements TextBox {
     /**
      * Creates a Element for a given WebElement.
      *
      * @param element element to wrap up
      */
-    public TextInputImpl(WebElement element) {
+    public TextBoxImpl(WebElement element) {
         super(element);
     }
 

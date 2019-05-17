@@ -1,5 +1,7 @@
 package com.ztaf.elements.helpers;
 
+import static com.fortaf.framework.drivers.DriverManager.driver;
+
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -11,11 +13,9 @@ import com.fortaf.elements.basic.CheckBox;
 import com.fortaf.elements.basic.Label;
 import com.fortaf.elements.basic.Select;
 import com.fortaf.elements.basic.Table;
-import com.fortaf.elements.basic.TextInput;
+import com.fortaf.elements.basic.TextBox;
 import com.fortaf.elements.custom.SelectFragment;
 import com.fortaf.framework.core.BasePage;
-
-import static com.fortaf.drivers.DriverManager.driver;
 
 /**
  * declare elements of a form.
@@ -24,7 +24,7 @@ public class FormTestObject extends BasePage{
 
     private WebDriver driver;
 
-    public TextInput texta;
+    public TextBox texta;
 
     //@FindBy(id = "test1")
     public Element test1;

@@ -1,8 +1,8 @@
 package com.fortaf.testng;
 
-import static com.fortaf.drivers.DriverManager.driver;
-import static com.fortaf.test.config.ContextParam.BASE_URL;
-import static com.fortaf.test.config.ContextParam.BROWSER;
+import static com.fortaf.framework.drivers.DriverManager.driver;
+import static com.fortaf.test.config.ContextParam.*;
+import java.lang.annotation.Annotation;
 
 import org.testng.IInvokedMethod;
 import org.testng.IInvokedMethodListener;
@@ -10,8 +10,9 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import com.fortaf.annotations.TestConfig;
-import com.fortaf.drivers.DriverManager;
+import com.fortaf.framework.annotations.APITest;
+import com.fortaf.framework.annotations.WebTest;
+import com.fortaf.framework.drivers.DriverManager;
 import com.fortaf.reports.BasicExtentReport;
 import com.fortaf.test.config.TestContext;
 
@@ -58,37 +59,17 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 
 	}
 
-//	@Override
-//	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-//
-//		BasicExtentReport.logTestCase(method.getTestMethod().getMethodName());
-//
-//		// If annotation is present
-//		if (TestConfig.class!=null || testResult.getInstance().getClass().isAnnotationPresent(TestConfig.class)) {
-//
-//			if (method.isTestMethod()) {
-//				System.out.println("Start Executing Test: " + method.getTestMethod().getMethodName());
-//				TestConfig config = testResult.getInstance().getClass().getAnnotation(TestConfig.class);
-//				/** Start the browser **/
-//				DriverManager manager = new DriverManager();
-//				manager.getBrowser(config.browser().toString());
-//				System.out.println(config.baseUrl());
-//				driver().navigate().to(config.baseUrl());
-//			}
-//		}
-//	}
-
 	@Override
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
 
 		BasicExtentReport.logTestCase(method.getTestMethod().getMethodName());
 
-		// If annotation is present
-		if (testResult.getInstance().getClass().isAnnotationPresent(TestConfig.class)) {
+		/* If WebTest annotation is present */
+		if (testResult.getInstance().getClass().isAnnotationPresent(WebTest.class)) {
 
 			if (method.isTestMethod()) {
 				System.out.println("Start Executing Test: " + method.getTestMethod().getMethodName());
-				setTestConfigParamsToContext(testResult);
+				setAnnotationParamsToContext(testResult, WebTest.class);
 				
 				/** Start the browser **/
 				DriverManager manager = new DriverManager();
@@ -97,6 +78,19 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 				driver().navigate().to(TestContext.get(BASE_URL).toString());
 			}
 		}
+				
+		/* If APITest Annotation is present */
+		if (testResult.getInstance().getClass().isAnnotationPresent(APITest.class)) {
+
+			if (method.isTestMethod()) {
+				System.out.println("Start Executing API Test: " + method.getTestMethod().getMethodName());
+				setAnnotationParamsToContext(testResult, APITest.class);
+				
+				//TODO :  API Test Implement here
+			}
+		}
+		
+		
 	}
 	
 	@Override
@@ -104,7 +98,7 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 		
 		BasicExtentReport.getResult(testResult, driver());
 		
-		if (method.isTestMethod() && !driver().equals(null)) {
+		if (method.isTestMethod() && driver() != null) {
 			System.out.println("Finished Executing Test: " + method.getTestMethod().getMethodName());
 			driver().close();
 		}
@@ -114,23 +108,37 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 	 * Set test config parameters to context
 	 * @param testResult
 	 */
-	public void setTestConfigParamsToContext(ITestResult testResult) {
-		TestConfig configAnnotation = testResult.getInstance().getClass().getAnnotation(TestConfig.class);
+	public void setAnnotationParamsToContext(ITestResult testResult, Class<? extends Annotation> annotationClass) {
+		Annotation annotation = testResult.getInstance().getClass().getAnnotation(annotationClass);
 
-		if (isTestConfigAnnoationPresent(testResult)) {
-			TestContext.setIfNotExist(BROWSER, configAnnotation.browser().toString());
-			TestContext.setIfNotExist(BASE_URL, configAnnotation.baseUrl().toString());
+		if (isAnnoationPresent(testResult, WebTest.class)) {
+			TestContext.setIfNotExist(BROWSER, ((WebTest) annotation).browser().toString());
+			TestContext.setIfNotExist(BASE_URL, ((WebTest) annotation).baseUrl().toString());
+			TestContext.setIfNotExist(PRIORITY, ((WebTest) annotation).priority().toString());
+
+			// TODO: Add any other default parameters
+		}
+		
+		if (isAnnoationPresent(testResult, APITest.class)) {
+			TestContext.setIfNotExist(ENDPOINT_URL, ((APITest) annotation).endPointURL().toString());
+			TestContext.setIfNotExist(PRIORITY, ((APITest) annotation).priority().toString());
+
 			// TODO: Add any other default parameters
 		}
 	}
 	
-	public boolean isTestConfigAnnoationPresent(ITestResult testResult){
-		if (testResult.getInstance().getClass().isAnnotationPresent(TestConfig.class))
+	/**
+	 * Check if the given annotation is present
+	 * @param testResult ITestResult
+	 * @param annotationClass Annotation class
+	 * @return true if Annotation is present
+	 */
+	public boolean isAnnoationPresent(ITestResult testResult, Class<? extends Annotation> annotationClass){
+		if (testResult.getInstance().getClass().isAnnotationPresent(annotationClass))
 			return true;
 		else
 			return false;
 	}
-	
 	
 	
 	/**

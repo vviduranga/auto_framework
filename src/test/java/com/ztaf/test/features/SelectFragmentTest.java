@@ -9,7 +9,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.fortaf.drivers.DriverManager;
+import com.fortaf.framework.drivers.DriverManager;
 import com.ztaf.elements.helpers.FormTestObject;
 
 /**

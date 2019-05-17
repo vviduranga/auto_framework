@@ -25,7 +25,7 @@ import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
-import com.fortaf.drivers.DriverManager;
+import com.fortaf.framework.drivers.DriverManager;
 	
 public class ExtentReportsTest {
 	public WebDriver driver;

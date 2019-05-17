@@ -130,4 +130,10 @@ public class ElementImpl implements Element {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 }
+
+/**
+ * 1. https://falkenfighter.wordpress.com/2013/10/29/access-the-by-class-created-using-findby-annotation-in-selenium/
+ * 
+ */
