@@ -1,11 +1,10 @@
 package com.fortaf.framework.core;
 
-import static com.fortaf.framework.drivers.DriverManager.driver;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -15,13 +14,19 @@ public class AlertHandler {
 
 	private static final Logger logger = Logger.getLogger(AlertHandler.class);
 
-	private static long defaultTimeout = Timeout.ALERT_TIMEOUT.getSeconds();
-
+	private static long defaultTimeout = 0;
+	private static WebDriver driver;
+    
+	public AlertHandler(WebDriver driver) {
+		AlertHandler.driver = driver;
+		defaultTimeout = Timeout.ALERT_TIMEOUT.getSeconds();
+	}
+	
 	/**
 	 * Accept Alert if present. This will wait for a default timeout of 30
 	 * seconds if alert is not visible immediately
 	 */
-	public static void AcceptAlertIfPresent() {
+	public void AcceptAlertIfPresent() {
 		AcceptAlertIfPresent(defaultTimeout);
 	}
 
@@ -31,13 +36,13 @@ public class AlertHandler {
 	 * @param timeOutInSeconds
 	 *            timeout to wait until an alert is present (in Seconds)
 	 */
-	public static void AcceptAlertIfPresent(long timeOutInSeconds) {
+	public void AcceptAlertIfPresent(long timeOutInSeconds) {
 		boolean found = false;
-		WebDriverWait wait = new WebDriverWait(driver(), timeOutInSeconds);
+		WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
 		try {
 			wait.ignoring(NoAlertPresentException.class);
 			wait.until(ExpectedConditions.alertIsPresent());
-			Alert alert = driver().switchTo().alert();
+			Alert alert = driver.switchTo().alert();
 			alert.accept();
 			found = true;
 		} catch (TimeoutException e) {
@@ -57,7 +62,7 @@ public class AlertHandler {
 	 * Dismiss Alert if present. This will wait for a default timeout of 30
 	 * seconds if alert is not visible immediately
 	 */
-	public static void DismissAlertIfPresent() {
+	public void DismissAlertIfPresent() {
 		DismissAlertIfPresent(defaultTimeout);
 	}
 
@@ -67,13 +72,13 @@ public class AlertHandler {
 	 * @param timeOutInSeconds
 	 *            timeout to wait until an alert is present (in Seconds)
 	 */
-	public static void DismissAlertIfPresent(long timeOutInSeconds) {
+	public void DismissAlertIfPresent(long timeOutInSeconds) {
 		boolean found = false;
-		WebDriverWait wait = new WebDriverWait(driver(), timeOutInSeconds);
+		WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
 		try {
 			wait.ignoring(NoAlertPresentException.class);
 			wait.until(ExpectedConditions.alertIsPresent());
-			Alert alert = driver().switchTo().alert();
+			Alert alert = driver.switchTo().alert();
 			alert.accept();
 			found = true;
 		} catch (TimeoutException e) {
@@ -95,7 +100,7 @@ public class AlertHandler {
 	 * 
 	 * @return Text in the alert
 	 */
-	public static String AcceptAlertIfPresentAndGetMessage() {
+	public String AcceptAlertIfPresentAndGetMessage() {
 		return AcceptAlertIfPresentAndGetMessage(defaultTimeout);
 	}
 
@@ -106,13 +111,13 @@ public class AlertHandler {
 	 *            timeout to wait until an alert is present (in Seconds)
 	 * @return Text in the alert
 	 */
-	public static String AcceptAlertIfPresentAndGetMessage(long timeOutInSeconds) {
+	public String AcceptAlertIfPresentAndGetMessage(long timeOutInSeconds) {
 		String text = "";
-		WebDriverWait wait = new WebDriverWait(driver(), timeOutInSeconds);
+		WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
 		try {
 			wait.ignoring(NoAlertPresentException.class);
 			wait.until(ExpectedConditions.alertIsPresent());
-			Alert alert = driver().switchTo().alert();
+			Alert alert = driver.switchTo().alert();
 			text = alert.getText();
 			alert.accept();
 		} catch (TimeoutException e) {
@@ -131,10 +136,10 @@ public class AlertHandler {
 	 * @return Text in the alert
 	 * @throws Exception
 	 */
-	public static String GetAlertMessage() throws Exception {
+	public String GetAlertMessage() throws Exception {
 		String text = "";
 		try {
-			Alert alert = driver().switchTo().alert();
+			Alert alert = driver.switchTo().alert();
 			text = alert.getText();
 		} catch (NoAlertPresentException e) {
 			logger.debug("Alert not present" + e.getMessage());
@@ -150,10 +155,10 @@ public class AlertHandler {
 	 * 
 	 * @return true if alert found
 	 */
-	public static boolean IsPresent() {
+	public boolean IsPresent() {
 		boolean found = false;
 		try {
-			Alert alert = driver().switchTo().alert();
+			Alert alert = driver.switchTo().alert();
 			if (alert != null) {
 				found = true;
 			}

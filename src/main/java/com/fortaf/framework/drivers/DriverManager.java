@@ -5,11 +5,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import static com.fortaf.test.config.ContextParam.*;
+import com.fortaf.test.config.TestContext;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DriverManager {
-//	
+	
 //	public static WebDriver driver;
 //	
 //	/**
@@ -49,11 +51,11 @@ public class DriverManager {
 	
 		if(browser.equalsIgnoreCase("chrome")){
 			WebDriverManager.chromedriver().setup();
-			setDriver(new ChromeDriver());
+			setDriver(new ChromeDriver(DriverOptionsManager.getChromeOptions()));
 		}
 		else if(browser.equalsIgnoreCase("firefox")){
 			WebDriverManager.firefoxdriver().setup();
-			setDriver(new FirefoxDriver());
+			setDriver(new FirefoxDriver(DriverOptionsManager.getFirefoxOptions()));
 		}
 		else if(browser.equalsIgnoreCase("ie")){
 			WebDriverManager.iedriver().setup();
@@ -63,6 +65,7 @@ public class DriverManager {
 			WebDriverManager.edgedriver().setup();
 			setDriver(new EdgeDriver());
 		}
+		TestContext.set(DRIVER, driver.get()); // Set the driver object in the test context
 		return driver.get();
 	}
 	

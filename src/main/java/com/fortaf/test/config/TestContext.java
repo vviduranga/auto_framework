@@ -6,24 +6,23 @@ import com.google.common.collect.Maps;
 
 public class TestContext {
 
-
 	//private static Map<String, String> TESTPLAN_PARAMETERS = new HashMap<String, String>();
 
-	protected static final ThreadLocal<Map<String, Object>> automationCache = new ThreadLocal<>();
+	protected static final ThreadLocal<Map<String, Object>> automationContext = new ThreadLocal<>();
 
 	/**
 	 * Initiate the Test Context
 	 */
 	public static final void initiate(){
 		Map<String, Object> map = Maps.newHashMap();
-		automationCache.set(map);
+		automationContext.set(map);
 	}
 	
 	/**
 	 * Clear the Test Context
 	 */
 	public static final void clear(){
-		automationCache.remove();
+		automationContext.remove();
 	}
 	
 	/**
@@ -33,7 +32,7 @@ public class TestContext {
 	 */
 	@SuppressWarnings("unchecked")
 	public static final <o> o get(String key){
-		Map<String, Object> cache = automationCache.get();
+		Map<String, Object> cache = automationContext.get();
 		if(!isNull()){
 			return (o) cache.get(key);
 		}
@@ -46,7 +45,7 @@ public class TestContext {
 	 * @param value value
 	 */
 	public static final void set(String key, Object value){
-		Map<String, Object> cache = automationCache.get();
+		Map<String, Object> cache = automationContext.get();
 		cache.put(key, value);
 	}
 	
@@ -65,7 +64,7 @@ public class TestContext {
 	 * @param key context key
 	 */
 	public static final void remove(String key){
-		Map<String, Object> cache = automationCache.get();
+		Map<String, Object> cache = automationContext.get();
 		cache.remove(key);
 	}
 	
@@ -75,7 +74,7 @@ public class TestContext {
 	 */
 	public static final boolean isNull(){
 		boolean status = false;
-		if(automationCache.get() == null){
+		if(automationContext.get() == null){
 			status = true;
 		}
 		return status;
@@ -88,7 +87,7 @@ public class TestContext {
 	 */
 	public static final boolean isExist(String key){
 		boolean status = false;
-		Map<String, Object> cache = automationCache.get();
+		Map<String, Object> cache = automationContext.get();
 		if(!isNull() && cache.containsKey(key) && get(key)!=null){
 			status =true;
 		}

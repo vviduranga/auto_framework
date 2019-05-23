@@ -4,6 +4,7 @@ import static com.fortaf.framework.drivers.DriverManager.driver;
 
 import java.util.List;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
@@ -18,12 +19,13 @@ public class WaitHandler {
 	private static final Logger logger = Logger.getLogger(WaitHandler.class);
 
     /**
-     * Sleep test execution for a given amount of time
-     * @param timeout Timeout in milliseconds
+     * Pause the test execution for a given number of seconds
+     * @param timeout Timeout in seconds
      */
     public static void sleep(int timeout){
+    	int seconds = timeout*1000;
         try{
-            Thread.sleep(timeout);
+            Thread.sleep(seconds);
         }
         catch (Exception ex){
             logger.error("Error trying to sleep: '" + ex.getMessage() + "'");
@@ -206,5 +208,17 @@ public class WaitHandler {
             logger.error("Error in waitForContainText: " + ex.getMessage());
         }
     }
+    
+    
+    /**
+     * Wait for the page to be loaded
+     */
+    public static void waitForPageToLoad() {
+		//TODO: 
+    	throw new NotImplementedException("Not Implemented");
+	}
+    
+    
+    
     
 }

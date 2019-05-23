@@ -59,7 +59,7 @@ public class BasicExtentReport {
 		extent.setSystemInfo("User Name", "Fortude (Pvt) Ltd");
 		htmlReporter.config().setDocumentTitle("Fortude Test Automation Report"); // Name of the report
 		htmlReporter.config().setReportName("Fortude Test Automation Report"); // Dark Theme
-		htmlReporter.config().setTheme(Theme.DARK);		
+		htmlReporter.config().setTheme(Theme.STANDARD);		
 	}
 	
 	/**

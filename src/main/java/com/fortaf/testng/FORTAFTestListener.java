@@ -56,27 +56,29 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 	@Override
 	public void onFinish(ITestContext context) {
 		// TODO Auto-generated method stub		
+		
+//		if (driver() != null) {
+//			driver().close();
+//		}
 
 	}
 
 	@Override
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-
 		BasicExtentReport.logTestCase(method.getTestMethod().getMethodName());
 
 		/* If WebTest annotation is present */
 		if (testResult.getInstance().getClass().isAnnotationPresent(WebTest.class)) {
+			setAnnotationParamsToContext(testResult, WebTest.class);
 
-			if (method.isTestMethod()) {
+			/* Check if the driver is null, If NUll, initialize the driver */
+			//if (driver() == null) {
 				System.out.println("Start Executing Test: " + method.getTestMethod().getMethodName());
-				setAnnotationParamsToContext(testResult, WebTest.class);
 				
 				/** Start the browser **/
 				DriverManager manager = new DriverManager();
 				manager.getBrowser(TestContext.get(BROWSER).toString());
-				System.out.println(TestContext.get(BASE_URL).toString());
-				driver().navigate().to(TestContext.get(BASE_URL).toString());
-			}
+			//}
 		}
 				
 		/* If APITest Annotation is present */
@@ -89,18 +91,16 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 				//TODO :  API Test Implement here
 			}
 		}
-		
-		
 	}
 	
 	@Override
-	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-		
-		BasicExtentReport.getResult(testResult, driver());
-		
+	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {		
+		BasicExtentReport.getResult(testResult, driver());		
 		if (method.isTestMethod() && driver() != null) {
 			System.out.println("Finished Executing Test: " + method.getTestMethod().getMethodName());
 			driver().close();
+			driver().quit();
+		//	driver().
 		}
 	}
 

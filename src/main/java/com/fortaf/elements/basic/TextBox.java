@@ -9,7 +9,16 @@ import com.fortaf.elements.base.ImplementedBy;
 @ImplementedBy(TextBoxImpl.class)
 public interface TextBox extends Element {
     /**
+     * Type the text into the field.
      * @param text The text to type into the field.
      */
-    void set(String text);
+	void type(String text);
+	
+    /**
+     * Forcefully type the text into the field.
+     * @param text The text to type into the field.
+     */
+	void typeByJS(String text);
+
+	void typeAppend(String text);
 }

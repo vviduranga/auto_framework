@@ -11,12 +11,8 @@ public class FORTAFSuitListener implements ISuiteListener {
 
 	@Override
 	public void onStart(ISuite suite) {
-		/* Get all TestNG TestPlan Parameters */
-		//TestCommons.setTestPlanParameters(suite.getXmlSuite().getAllParameters());
-		
-		
-		System.out.println(suite.getXmlSuite().getAllParameters());
-		// TODO Auto-generated method stub
+		/* Set all TestNG TestPlan parameters to context */
+		this.setTestPlanParametersToContext(suite);		
 	}
 
 	@Override
@@ -24,12 +20,16 @@ public class FORTAFSuitListener implements ISuiteListener {
 		// TODO Auto-generated method stub
 	}
 
-	public void setTestPlanParametersToContext(ISuite suite){
-		Map<String, String> params = suite.getXmlSuite().getAllParameters();
-		
-		// Add all test plan params to test context
-		
-		
+	/**
+	 * Set all Suite Level test plan params to test context
+	 * @param suite
+	 */
+	public void setTestPlanParametersToContext(ISuite suite) {		
+		/* Set all Suite Level test plan params to test context	*/
+		Map<String, String> testPlanParams = suite.getXmlSuite().getParameters();
+		for (Map.Entry<String, String> entry : testPlanParams.entrySet()) {
+			TestContext.set(entry.getKey(), entry.getValue());
+		}
 	}
 	
 	/**

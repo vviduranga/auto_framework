@@ -9,8 +9,13 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
+import static com.fortaf.framework.core.WebActions.*;
+
+import com.fortaf.framework.core.JSActions;
+import com.fortaf.framework.core.WaitHandler;
 
 /**
  * An implementation of the Element interface. Delegates its work to an underlying WebElement instance for
@@ -101,7 +106,10 @@ public class ElementImpl implements Element {
 
     @Override
     public void clear() {
-        element.clear();
+		element.clear();
+		if (element.getText().length() > 0) {
+			JSActions.clearByJS(element);
+		}
     }
 
     @Override
@@ -122,14 +130,75 @@ public class ElementImpl implements Element {
 	@Override
 	public Rectangle getRect() {
 		// TODO Auto-generated method stub
-		return null;
+		return element.getRect();
 	}
 
 	@Override
 	public <X> X getScreenshotAs(OutputType<X> arg0) throws WebDriverException {
 		// TODO Auto-generated method stub
-		return null;
+		return element.getScreenshotAs(arg0);
 	}
+	
+	/** Wait Functions **/
+	
+	@Override
+	public void waitToBeDisplayed(){
+		WaitHandler.waitToBeDisplayed(element);		
+	}
+	
+	@Override
+	public void waitToBeDisplayed(int timeoutInSeconds){
+		WaitHandler.waitToBeDisplayed(element, timeoutInSeconds);		
+	}
+
+	@Override
+	public void waitToBeClickable(){
+		WaitHandler.waitToBeClickable(element);
+	}
+	
+	@Override
+	public void waitToBeClickable(int timeOutInSeconds){
+		WaitHandler.waitToBeClickable(element, timeOutInSeconds);
+	}
+	
+	@Override
+	public void waitToBeHidden(){
+		WaitHandler.waitToBeHidden(element);
+	}
+	
+	@Override
+	public void waitToBeHidden(int timeOutInSeconds){
+		WaitHandler.waitToBeHidden(element, timeOutInSeconds);
+	}
+		
+	@Override
+	public void waitForAnyText(int timeOutInSeconds){
+		WaitHandler.waitForAnyText(element, timeOutInSeconds);
+	}
+	
+	@Override
+	public void waitForContainText(String text, int timeOutInSeconds){
+		WaitHandler.waitForContainText(element, text, timeOutInSeconds);
+	}
+
+	/** Additional functions **/
+	@Override
+	public void rightClick() {		
+		Actions action = new Actions(driver);
+		action.contextClick(element).perform();
+	}
+
+	@Override
+	public void doubleClick() {
+		element.click();
+		element.click();		
+	}
+
+	@Override
+	public void clickByJS() {
+		JSActions.clickByJS(element);
+	}
+	
 	
 }
 

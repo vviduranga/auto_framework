@@ -1,7 +1,5 @@
 package com.fortaf.framework.core;
 
-import static com.fortaf.framework.drivers.DriverManager.driver;
-
 import java.util.Iterator;
 import java.util.Set;
 
@@ -12,20 +10,26 @@ public class WindowHandler {
 
 	private static final Logger logger = Logger.getLogger(WindowHandler.class);
 
+	private static WebDriver driver;
+	
+	public WindowHandler(WebDriver driver) {
+		WindowHandler.driver = driver;
+	}
+	
 	/**
 	 * Switch to browser window by title
 	 * 
 	 * @param windowTitle
 	 * @return
 	 */
-	public static WebDriver SwitchToWindowByTtitle(String windowTitle) {
+	public WebDriver SwitchToWindowByTtitle(String windowTitle) {
 		WebDriver newWindow = null;
 		try {
-			Set<String> handles = driver().getWindowHandles();
+			Set<String> handles = driver.getWindowHandles();
 			Iterator<String> ite = handles.iterator();
 			while (ite.hasNext()) {
 				String tempWindow = ite.next().toString();
-				newWindow = driver().switchTo().window(tempWindow);
+				newWindow = driver.switchTo().window(tempWindow);
 				if (newWindow.getTitle() == windowTitle)
 					break;
 			}
@@ -38,18 +42,18 @@ public class WindowHandler {
 	/**
 	 * Switch to browser window by URL
 	 * 
-	 * @param windowURL
+	 * @param windowURL url
 	 * @return
 	 */
-	public static WebDriver SwitchToWindowByURL(String windowURL) {
+	public WebDriver SwitchToWindowByURL(String windowURL) {
 
 		WebDriver newWindow = null;
 		try {
-			Set<String> handles = driver().getWindowHandles();
+			Set<String> handles = driver.getWindowHandles();
 			Iterator<String> ite = handles.iterator();
 			while (ite.hasNext()) {
 				String tempWindow = ite.next().toString();
-				newWindow = driver().switchTo().window(tempWindow);
+				newWindow = driver.switchTo().window(tempWindow);
 				if (newWindow.getCurrentUrl() == windowURL)
 					break;
 			}
@@ -62,18 +66,18 @@ public class WindowHandler {
 	/**
 	 * Switch to browser window by Partial URL
 	 * 
-	 * @param windowURL
+	 * @param windowPartialURL Partial url
 	 * @return
 	 */
-	public static WebDriver SwitchToWindowByPartialURL(String windowPartialURL) {
+	public WebDriver SwitchToWindowByPartialURL(String windowPartialURL) {
 
 		WebDriver newWindow = null;
 		try {
-			Set<String> handles = driver().getWindowHandles();
+			Set<String> handles = driver.getWindowHandles();
 			Iterator<String> ite = handles.iterator();
 			while (ite.hasNext()) {
 				String tempWindow = ite.next().toString();
-				newWindow = driver().switchTo().window(tempWindow);
+				newWindow = driver.switchTo().window(tempWindow);
 				if (newWindow.getTitle().contains(windowPartialURL))
 					break;
 			}
