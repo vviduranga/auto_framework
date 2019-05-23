@@ -68,7 +68,7 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 		BasicExtentReport.logTestCase(method.getTestMethod().getMethodName());
 
 		/* If WebTest annotation is present */
-		if (testResult.getInstance().getClass().isAnnotationPresent(WebTest.class)) {
+		if (WebTest.class!=null && testResult.getInstance().getClass().isAnnotationPresent(WebTest.class)) {
 			setAnnotationParamsToContext(testResult, WebTest.class);
 
 			/* Check if the driver is null, If NUll, initialize the driver */
@@ -82,7 +82,7 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 		}
 				
 		/* If APITest Annotation is present */
-		if (testResult.getInstance().getClass().isAnnotationPresent(APITest.class)) {
+		if (APITest.class!=null && testResult.getInstance().getClass().isAnnotationPresent(APITest.class)) {
 
 			if (method.isTestMethod()) {
 				System.out.println("Start Executing API Test: " + method.getTestMethod().getMethodName());

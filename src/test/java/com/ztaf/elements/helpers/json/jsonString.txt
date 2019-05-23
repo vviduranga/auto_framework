@@ -1,9 +1,0 @@
-{
-     "id":"Srikanth",
-     "name":"Ruban",
-     "address":{ 
-	     "number":"146", 
-	     "road":"Kinsey Road", 
-	     "city":"Colombo 07" 
-     }
-}
