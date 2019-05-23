@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -46,7 +45,6 @@ public class BasicExtentReport {
         	file.getParentFile().mkdirs();
 			file.createNewFile();
 		} catch (IOException e) {
-			// TODO Log / handle exception properly
 			e.printStackTrace();	
 		}
         		
@@ -97,28 +95,26 @@ public class BasicExtentReport {
 	public static void getResult(ITestResult result, WebDriver driver){
 		if(result.getStatus() == ITestResult.FAILURE){
 			//MarkupHelper is used to display the output in different colors
-			logger.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test Case Failed", ExtentColor.RED));
-			logger.log(Status.FAIL, MarkupHelper.createLabel(result.getThrowable() + " - Test Case Failed", ExtentColor.RED));
+			logger.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " - Test Case FAILED", ExtentColor.RED));
+			logger.log(Status.FAIL, MarkupHelper.createLabel(result.getThrowable() + " - Test Case FAILED", ExtentColor.RED));
 			//To capture screenshot path and store the path of the screenshot in the string "screenshotPath"
 			//We do pass the path captured by this method in to the extent reports using "logger.addScreenCapture" method. 
 			String screenshotPath;
 			try {
 				screenshotPath = getScreenShot(driver, result.getName());
 				//To add it in the extent report 
-				logger.fail("Test Case Failed Snapshot is below " + logger.addScreenCaptureFromPath(screenshotPath));
+				logger.fail("Test Case Failed Snapshot is below: " + logger.addScreenCaptureFromPath(screenshotPath));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}			
+			}
 		}
 		else if(result.getStatus() == ITestResult.SKIP){
-			logger.log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " - Test Case Skipped", ExtentColor.ORANGE)); 
-		} 
+			logger.log(Status.SKIP, MarkupHelper.createLabel(result.getName() + " - Test Case SKIPPED", ExtentColor.ORANGE)); 
+		}
 		else if(result.getStatus() == ITestResult.SUCCESS)
 		{
-			logger.log(Status.PASS, MarkupHelper.createLabel(result.getName()+" Test Case PASSED", ExtentColor.GREEN));
+			logger.log(Status.PASS, MarkupHelper.createLabel(result.getName() + " Test Case PASSED", ExtentColor.GREEN));
 		}
-		//driver.quit();
 	}
 
 	//@AfterTest

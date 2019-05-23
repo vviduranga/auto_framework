@@ -9,6 +9,7 @@ import org.testng.IInvokedMethodListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.TestListenerAdapter;
 
 import com.fortaf.framework.annotations.APITest;
 import com.fortaf.framework.annotations.WebTest;
@@ -16,46 +17,46 @@ import com.fortaf.framework.drivers.DriverManager;
 import com.fortaf.reports.BasicExtentReport;
 import com.fortaf.test.config.TestContext;
 
-public class FORTAFTestListener implements ITestListener, IInvokedMethodListener {
+public class FORTAFTestListener extends TestListenerAdapter implements IInvokedMethodListener {
 
 	@Override
 	public void onTestStart(ITestResult result) {
-
+		super.onTestStart(result);
 	}
 
 	@Override
 	public void onTestSuccess(ITestResult result) {
-		// TODO Auto-generated method stub
-
+		super.onTestSuccess(result);
+		BasicExtentReport.getResult(result, driver());	
 	}
 
 	@Override
 	public void onTestFailure(ITestResult result) {
-		// TODO Auto-generated method stub
-
+		super.onTestFailure(result);
+		BasicExtentReport.getResult(result, driver());	
 	}
 
 	@Override
 	public void onTestSkipped(ITestResult result) {
-		// TODO Auto-generated method stub
-
+		super.onTestSkipped(result);
+		BasicExtentReport.getResult(result, driver());		
 	}
 
 	@Override
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-		// TODO Auto-generated method stub
+		super.onTestFailedButWithinSuccessPercentage(result);
 
 	}
 
 	@Override
 	public void onStart(ITestContext context) {
-		// TODO Auto-generated method stub
+		super.onStart(context);
 
 	}
 
 	@Override
 	public void onFinish(ITestContext context) {
-		// TODO Auto-generated method stub		
+		super.onFinish(context);	
 		
 //		if (driver() != null) {
 //			driver().close();
@@ -65,20 +66,20 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 
 	@Override
 	public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
-		BasicExtentReport.logTestCase(method.getTestMethod().getMethodName());
+//		BasicExtentReport.logTestCase(method.getTestMethod().getMethodName());
 
 		/* If WebTest annotation is present */
 		if (WebTest.class!=null && testResult.getInstance().getClass().isAnnotationPresent(WebTest.class)) {
 			setAnnotationParamsToContext(testResult, WebTest.class);
 
 			/* Check if the driver is null, If NUll, initialize the driver */
-			//if (driver() == null) {
+			if (driver() == null) {
 				System.out.println("Start Executing Test: " + method.getTestMethod().getMethodName());
 				
 				/** Start the browser **/
 				DriverManager manager = new DriverManager();
 				manager.getBrowser(TestContext.get(BROWSER).toString());
-			//}
+			}
 		}
 				
 		/* If APITest Annotation is present */
@@ -86,8 +87,7 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 
 			if (method.isTestMethod()) {
 				System.out.println("Start Executing API Test: " + method.getTestMethod().getMethodName());
-				setAnnotationParamsToContext(testResult, APITest.class);
-				
+				setAnnotationParamsToContext(testResult, APITest.class);				
 				//TODO :  API Test Implement here
 			}
 		}
@@ -95,12 +95,11 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 	
 	@Override
 	public void afterInvocation(IInvokedMethod method, ITestResult testResult) {		
-		BasicExtentReport.getResult(testResult, driver());		
+//		BasicExtentReport.getResult(testResult, driver());		
 		if (method.isTestMethod() && driver() != null) {
 			System.out.println("Finished Executing Test: " + method.getTestMethod().getMethodName());
 			driver().close();
 			driver().quit();
-		//	driver().
 		}
 	}
 
@@ -115,14 +114,12 @@ public class FORTAFTestListener implements ITestListener, IInvokedMethodListener
 			TestContext.setIfNotExist(BROWSER, ((WebTest) annotation).browser().toString());
 			TestContext.setIfNotExist(BASE_URL, ((WebTest) annotation).baseUrl().toString());
 			TestContext.setIfNotExist(PRIORITY, ((WebTest) annotation).priority().toString());
-
 			// TODO: Add any other default parameters
 		}
 		
 		if (isAnnoationPresent(testResult, APITest.class)) {
 			TestContext.setIfNotExist(ENDPOINT_URL, ((APITest) annotation).endPointURL().toString());
 			TestContext.setIfNotExist(PRIORITY, ((APITest) annotation).priority().toString());
-
 			// TODO: Add any other default parameters
 		}
 	}
