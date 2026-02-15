@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-current.dtd">
+<suite name="FORTAF Test Suite" verbose="2" parallel="false" thread-count="1">
+    
+    <!-- Suite Level Parameters -->
+    <parameter name="browser" value="chrome"/>
+    <parameter name="baseUrl" value="https://yourapp.com"/>
+    <parameter name="implicitWait" value="10"/>
+    
+    <!-- Test 1: Web UI Tests -->
+    <test name="Web UI Tests" enabled="true">
+        <classes>
+            <class name="com.fortaf.tests.ui.LoginTest"/>
+            <class name="com.fortaf.tests.ui.DashboardTest"/>
+            <class name="com.fortaf.tests.ui.CheckoutTest"/>
+        </classes>
+    </test>
+    
+    <!-- Test 2: API Tests -->
+    <test name="API Tests" enabled="true">
+        <parameter name="endpointUrl" value="https://api.yourapp.com"/>
+        <classes>
+            <class name="com.fortaf.tests.api.UserAPITest"/>
+            <class name="com.fortaf.tests.api.OrderAPITest"/>
+        </classes>
+    </test>
+    
+    <!-- Test 3: Smoke Tests Only (Selective Execution) -->
+    <test name="Smoke Tests" enabled="true">
+        <classes>
+            <class name="com.fortaf.tests.ui.LoginTest">
+                <methods>
+                    <include name="testValidLogin"/>
+                    <include name="testLogout"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <!-- Test 4: Disabled Test (Skip) -->
+    <test name="Regression Tests" enabled="false">
+        <classes>
+            <class name="com.fortaf.tests.ui.AdvancedFeatureTest"/>
+        </classes>
+    </test>
+
+    <!-- Listeners for Test Execution Management -->
+    <listeners>
+        <listener class-name="com.fortaf.testng.FORTAFExecutionListener"/>
+        <listener class-name="com.fortaf.testng.FORTAFSuitListener"/>
+        <listener class-name="com.fortaf.testng.FORTAFTestListener"/>
+    </listeners>
+</suite>
